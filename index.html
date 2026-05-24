@@ -40,12 +40,12 @@
   }
 
   /* ── Cursor ── */
-  .cursor { position:fixed; width:9px; height:9px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; mix-blend-mode:screen; transform:translate(-50%,-50%); transition:width .15s,height .15s; }
-  .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid rgba(56,189,248,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s,height .2s,border-color .2s; }
+  .cursor { position:fixed; width:9px; height:9px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; mix-blend-mode:screen; transform:translate(-50%,-50%); transition:widt[...]
+  .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid rgba(56,189,248,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:widt[...]
   .cursor-ring.hover { width:52px; height:52px; border-color:var(--accent); }
 
   /* ── Noise ── */
-  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:999; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type[...]
 
   /* ── NAV ── */
   nav {
@@ -61,7 +61,7 @@
   .nav-links { display:flex; gap:40px; list-style:none; }
   .nav-links a { text-decoration:none; color:var(--text-muted); font-size:13px; font-weight:500; letter-spacing:0.5px; transition:color .2s; }
   .nav-links a:hover { color:var(--text); }
-  .nav-cta { display:flex; align-items:center; gap:8px; padding:10px 24px; border:1.5px solid var(--accent); border-radius:6px; color:var(--accent); text-decoration:none; font-size:13px; font-weight:600; transition:all .2s; }
+  .nav-cta { display:flex; align-items:center; gap:8px; padding:10px 24px; border:1.5px solid var(--accent); border-radius:6px; color:var(--accent); text-decoration:none; font-size:13px; font-weight:6[...]
   .nav-cta:hover { background:var(--accent); color:#07090f; }
 
   /* ── HERO ── */
@@ -71,8 +71,8 @@
     padding:140px 56px 100px;
     position:relative; overflow:hidden; gap:64px;
   }
-  .hero-glow1 { position:absolute; top:15%; right:8%; width:560px; height:560px; background:radial-gradient(circle,rgba(56,189,248,0.07) 0%,transparent 65%); pointer-events:none; animation:glow 7s ease-in-out infinite alternate; }
-  .hero-glow2 { position:absolute; bottom:10%; left:0%; width:400px; height:400px; background:radial-gradient(circle,rgba(129,140,248,0.07) 0%,transparent 65%); pointer-events:none; animation:glow 9s ease-in-out infinite alternate-reverse; }
+  .hero-glow1 { position:absolute; top:15%; right:8%; width:560px; height:560px; background:radial-gradient(circle,rgba(56,189,248,0.07) 0%,transparent 65%); pointer-events:none; animation:glow 7s eas[...]
+  .hero-glow2 { position:absolute; bottom:10%; left:0%; width:400px; height:400px; background:radial-gradient(circle,rgba(129,140,248,0.07) 0%,transparent 65%); pointer-events:none; animation:glow 9s [...]
   @keyframes glow { 0%{opacity:.5;transform:scale(1)} 100%{opacity:1;transform:scale(1.12)} }
 
   .hero-left { position:relative; z-index:1; }
@@ -105,9 +105,9 @@
   }
 
   .hero-actions { display:flex; gap:16px; animation:fadeUp .8s .4s ease both; }
-  .btn-main { display:inline-flex; align-items:center; gap:10px; padding:15px 34px; background:var(--accent); color:#07090f; font-size:14px; font-weight:700; border-radius:6px; text-decoration:none; transition:all .2s; border:1.5px solid var(--accent); }
+  .btn-main { display:inline-flex; align-items:center; gap:10px; padding:15px 34px; background:var(--accent); color:#07090f; font-size:14px; font-weight:700; border-radius:6px; text-decoration:none; t[...]
   .btn-main:hover { background:transparent; color:var(--accent); }
-  .btn-ghost { display:inline-flex; align-items:center; gap:10px; padding:15px 34px; border:1.5px solid var(--border-bright); color:var(--text-muted); font-size:14px; font-weight:500; border-radius:6px; text-decoration:none; transition:all .2s; }
+  .btn-ghost { display:inline-flex; align-items:center; gap:10px; padding:15px 34px; border:1.5px solid var(--border-bright); color:var(--text-muted); font-size:14px; font-weight:500; border-radius:6p[...]
   .btn-ghost:hover { border-color:var(--text-muted); color:var(--text); }
 
   .hero-right { position:relative; z-index:1; animation:fadeUp .8s .5s ease both; }
@@ -172,25 +172,25 @@
     transition:border-color .25s, background .25s, transform .25s;
     position:relative; overflow:hidden;
   }
-  .project-row::before { content:''; position:absolute; left:0;top:0;bottom:0; width:3px; background:linear-gradient(180deg,var(--accent),var(--accent2)); opacity:0; transition:opacity .25s; border-radius:3px 0 0 3px; }
+  .project-row::before { content:''; position:absolute; left:0;top:0;bottom:0; width:3px; background:linear-gradient(180deg,var(--accent),var(--accent2)); opacity:0; transition:opacity .25s; border-ra[...]
   .project-row:hover { border-color:var(--border-bright); background:var(--surface2); transform:translateX(4px); }
   .project-row:hover::before { opacity:1; }
   .project-row.featured { border-color:rgba(56,189,248,0.25); background:linear-gradient(135deg,rgba(56,189,248,0.04),var(--surface)); }
   .project-row.featured::before { opacity:1; }
 
-  .proj-icon { width:56px; height:56px; background:var(--surface2); border:1.5px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0; }
+  .proj-icon { width:56px; height:56px; background:var(--surface2); border:1.5px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; flex[...]
 
   .proj-body { min-width:0; }
   .proj-meta { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
   .proj-year { font-size:12px; color:var(--text-soft); font-weight:500; letter-spacing:0.5px; }
-  .proj-badge { padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:0.5px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); color:var(--accent); }
+  .proj-badge { padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:0.5px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); color:var(--accen[...]
 
   .proj-name { font-family:'Syne',sans-serif; font-weight:700; font-size:19px; color:var(--text); letter-spacing:-0.4px; margin-bottom:10px; line-height:1.25; }
   .proj-desc { font-size:14px; color:var(--text-muted); line-height:1.75; margin-bottom:16px; font-weight:400; }
   .proj-tech { display:flex; flex-wrap:wrap; gap:8px; }
   .tech-tag { padding:4px 12px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.2); border-radius:100px; font-size:12px; color:var(--accent2); font-weight:500; }
 
-  .proj-arrow { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-soft); font-weight:500; white-space:nowrap; padding-top:8px; letter-spacing:0.5px; transition:color .2s; flex-shrink:0; }
+  .proj-arrow { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-soft); font-weight:500; white-space:nowrap; padding-top:8px; letter-spacing:0.5px; transition:color .2s; fle[...]
   .project-row:hover .proj-arrow { color:var(--accent); }
 
   /* ── EXPERIENCE ── */
@@ -219,10 +219,10 @@
   .certs-list { display:flex; flex-direction:column; }
   .cert-row { display:flex; align-items:center; gap:20px; padding:22px 0; border-bottom:1px solid var(--border); transition:padding-left .2s; }
   .cert-row:hover { padding-left:10px; }
-  .cert-icon { width:44px; height:44px; border-radius:10px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; background:var(--surface); }
+  .cert-icon { width:44px; height:44px; border-radius:10px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; background:var(--su[...]
   .cert-name { font-size:15px; color:var(--text); font-weight:600; margin-bottom:3px; }
   .cert-by { font-size:13px; color:var(--text-muted); font-weight:400; }
-  .cert-badge { margin-left:auto; padding:5px 14px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; border:1.5px solid rgba(52,211,153,0.35); color:var(--green); flex-shrink:0; }
+  .cert-badge { margin-left:auto; padding:5px 14px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; border:1.5px solid rgba(52,211,153,0.35); color:[...]
 
   /* ── ACHIEVEMENTS ── */
   .ach-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
@@ -239,7 +239,7 @@
   .contact-head .ghost { color:transparent; -webkit-text-stroke:1.5px rgba(240,242,248,0.18); }
   .contact-sub { font-size:16px; color:var(--text-muted); margin-bottom:52px; font-weight:400; line-height:1.6; }
   .contact-links { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
-  .c-link { display:flex; align-items:center; gap:10px; padding:14px 28px; border:1.5px solid var(--border-bright); border-radius:8px; color:var(--text-muted); text-decoration:none; font-size:14px; font-weight:500; transition:all .2s; }
+  .c-link { display:flex; align-items:center; gap:10px; padding:14px 28px; border:1.5px solid var(--border-bright); border-radius:8px; color:var(--text-muted); text-decoration:none; font-size:14px; fo[...]
   .c-link:hover { border-color:var(--accent); color:var(--accent); background:rgba(56,189,248,0.05); }
 
   /* ── FOOTER ── */
@@ -287,7 +287,7 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="mailto:salarbaloch195@gmail.com" class="nav-cta">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a[...]
     Hire Me
   </a>
 </nav>
@@ -302,7 +302,7 @@
     <p class="hero-subtitle">AI / ML Engineer</p>
     <p class="hero-desc">Final-year CS student at COMSATS University, building end-to-end AI pipelines, computer vision systems, and LLM-powered applications that solve real-world problems.</p>
     <div class="hero-actions">
-      <a href="#projects" class="btn-main">View Projects <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#projects" class="btn-main">View Projects <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a[...]
       <a href="mailto:salarbaloch195@gmail.com" class="btn-ghost">Get in Touch</a>
     </div>
   </div>
@@ -320,7 +320,7 @@
       <div class="skill-row"><span class="skill-name">LLMs</span><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div><span class="skill-pct">80%</span></div>
       <div class="skill-row"><span class="skill-name">Full Stack</span><div class="skill-track"><div class="skill-fill" style="width:72%"></div></div><span class="skill-pct">72%</span></div>
       <div class="hc-location">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle[...]
         Islamabad, Pakistan
       </div>
     </div>
@@ -336,7 +336,7 @@
   </div>
   <div class="about-grid reveal">
     <div class="about-text">
-      I'm a final-year Computer Science student passionate about <em>artificial intelligence,</em> <em>machine learning,</em> and <em>computer vision.</em> I build production-grade systems that turn academic research into real-world impact — from LLM-powered pipelines to full-stack mobile apps.
+      I'm a final-year Computer Science student passionate about <em>artificial intelligence,</em> <em>machine learning,</em> and <em>computer vision.</em> I build production-grade systems that turn a[...]
     </div>
     <div class="about-details">
       <div class="detail-card"><div class="detail-lbl">University</div><div class="detail-val">COMSATS University Islamabad</div></div>
@@ -356,12 +356,12 @@
     <div class="sec-line"></div>
   </div>
   <div class="reveal">
-    <div class="skill-cat"><div class="cat-label">Languages</div><div class="tag-cloud"><span class="tag hot">Python</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">SQL</span><span class="tag">Dart</span></div></div>
-    <div class="skill-cat"><div class="cat-label">AI / ML</div><div class="tag-cloud"><span class="tag hot">PyTorch</span><span class="tag hot">TensorFlow</span><span class="tag hot">YOLOv8</span><span class="tag hot">OpenCV</span><span class="tag">scikit-learn</span><span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div></div>
-    <div class="skill-cat"><div class="cat-label">LLM & APIs</div><div class="tag-cloud"><span class="tag hot">Gemini API</span><span class="tag hot">Groq API</span><span class="tag">Tesseract OCR</span><span class="tag">Streamlit</span><span class="tag">Flask</span></div></div>
-    <div class="skill-cat"><div class="cat-label">Web & Mobile</div><div class="tag-cloud"><span class="tag">React (Vite)</span><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">Flutter</span><span class="tag">Tailwind CSS</span><span class="tag">Prisma ORM</span></div></div>
-    <div class="skill-cat"><div class="cat-label">Databases</div><div class="tag-cloud"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Firebase Firestore</span></div></div>
-    <div class="skill-cat" style="border-bottom:none"><div class="cat-label">Concepts</div><div class="tag-cloud"><span class="tag">OOP</span><span class="tag">DSA</span><span class="tag">Computer Vision</span><span class="tag">Genetic Algorithms</span><span class="tag">REST APIs</span><span class="tag">MVC</span><span class="tag">OS Scheduling</span><span class="tag">Agile</span></div></div>
+    <div class="skill-cat"><div class="cat-label">Languages</div><div class="tag-cloud"><span class="tag hot">Python</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">SQ[...]
+    <div class="skill-cat"><div class="cat-label">AI / ML</div><div class="tag-cloud"><span class="tag hot">PyTorch</span><span class="tag hot">TensorFlow</span><span class="tag hot">YOLOv8</span><spa[...]
+    <div class="skill-cat"><div class="cat-label">LLM & APIs</div><div class="tag-cloud"><span class="tag hot">Gemini API</span><span class="tag hot">Groq API</span><span class="tag">Tesseract OCR</sp[...]
+    <div class="skill-cat"><div class="cat-label">Web & Mobile</div><div class="tag-cloud"><span class="tag">React (Vite)</span><span class="tag">Node.js</span><span class="tag">Express.js</span><span[...]
+    <div class="skill-cat"><div class="cat-label">Databases</div><div class="tag-cloud"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Firebase Firestore</span></div><[...]
+    <div class="skill-cat" style="border-bottom:none"><div class="cat-label">Concepts</div><div class="tag-cloud"><span class="tag">OOP</span><span class="tag">DSA</span><span class="tag">Computer Vis[...]
   </div>
 </section>
 
@@ -379,8 +379,8 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2026</span><span class="proj-badge">⭐ Featured</span></div>
         <div class="proj-name">AI-Powered ATS Pipeline</div>
-        <div class="proj-desc">Enterprise Document AI application for automated, semantic resume screening against job descriptions. Combined YOLOv8, Tesseract OCR, and LLMs to parse complex multi-column PDFs and perform intelligent skill matching. Engineered automated API failover (Gemini → Groq) to ensure 100% uptime under server bottlenecks.</div>
-        <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">YOLOv8</span><span class="tech-tag">Gemini API</span><span class="tech-tag">Groq API</span><span class="tech-tag">Tesseract OCR</span><span class="tech-tag">Streamlit</span></div>
+        <div class="proj-desc">Enterprise Document AI application for automated, semantic resume screening against job descriptions. Combined YOLOv8, Tesseract OCR, and LLMs to parse complex multi-col[...]
+        <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">YOLOv8</span><span class="tech-tag">Gemini API</span><span class="tech-tag">Groq API</span><span class="tech-t[...]
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     </div>
@@ -390,8 +390,8 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2026</span><span class="proj-badge">⭐ Featured</span></div>
         <div class="proj-name">CreatorSpace — Digital Creator Community App</div>
-        <div class="proj-desc">Full Flutter/Firebase mobile app with hierarchical data models for multi-level professional profiles (Education, Certifications) with image evidence support. Integrated keyword-based search across nested metadata, bios, and skill-sets. Built a two-way collaboration verification system, a multimedia feed with like logic, and a threaded notification centre.</div>
-        <div class="proj-tech"><span class="tech-tag">Flutter</span><span class="tech-tag">Dart</span><span class="tech-tag">Firebase</span><span class="tech-tag">Material 3</span><span class="tech-tag">Cupertino UI</span></div>
+        <div class="proj-desc">Full Flutter/Firebase mobile app with hierarchical data models for multi-level professional profiles (Education, Certifications) with image evidence support. Integrated [...]
+        <div class="proj-tech"><span class="tech-tag">Flutter</span><span class="tech-tag">Dart</span><span class="tech-tag">Firebase</span><span class="tech-tag">Material 3</span><span class="tech-ta[...]
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     </div>
@@ -401,8 +401,8 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2025</span></div>
         <div class="proj-name">Advanced Face Detection & Recognition System</div>
-        <div class="proj-desc">Production-grade Flask inference service integrating YOLOv8 with lazy loading and an OpenCV Haar fallback. Implemented face-recognition pipelines (dlib) with per-person averaged encodings and configurable cosine/L2 matching, overlaying recognised names on live streams in real time. Hardened with thread-safe camera worker and admin APIs for diagnostics.</div>
-        <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">YOLOv8</span><span class="tech-tag">Flask</span><span class="tech-tag">OpenCV</span><span class="tech-tag">dlib</span><span class="tech-tag">face_recognition</span></div>
+        <div class="proj-desc">Production-grade Flask inference service integrating YOLOv8 with lazy loading and an OpenCV Haar fallback. Implemented face-recognition pipelines (dlib) with per-person [...]
+        <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">YOLOv8</span><span class="tech-tag">Flask</span><span class="tech-tag">OpenCV</span><span class="tech-tag">dli[...]
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     </div>
@@ -412,7 +412,7 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2026</span></div>
         <div class="proj-name">AI-Based OMR / MCQ Grading System</div>
-        <div class="proj-desc">Modular computer vision pipeline for automatic answer-sheet evaluation directly from camera images. Integrated geometric correction, adaptive binarization, bubble ROI analysis, and deterministic A/B/C/D option mapping. Improved robustness via fallback contour detection and reusable JSON calibration anchors.</div>
+        <div class="proj-desc">Modular computer vision pipeline for automatic answer-sheet evaluation directly from camera images. Integrated geometric correction, adaptive binarization, bubble ROI an[...]
         <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">Computer Vision</span><span class="tech-tag">JSON Calibration</span></div>
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -423,7 +423,7 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2025</span></div>
         <div class="proj-name">Smart Scheduler System</div>
-        <div class="proj-desc">AI-powered scheduling system using Genetic Algorithms. Combined evolutionary optimisation with constraint rules to generate conflict-free, feasible timetables handling room capacity, time-slot conflicts, and instructor availability in real-world academic settings.</div>
+        <div class="proj-desc">AI-powered scheduling system using Genetic Algorithms. Combined evolutionary optimisation with constraint rules to generate conflict-free, feasible timetables handling r[...]
         <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">Genetic Algorithms</span><span class="tech-tag">Artificial Intelligence</span></div>
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -434,8 +434,8 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2025</span></div>
         <div class="proj-name">CarPool — Ride-Sharing Web Application</div>
-        <div class="proj-desc">Full-stack carpool platform supporting ride posting, search, and passenger/driver bookings. Implemented mandatory vehicle detail capture and a two-way user rating system displaying reputation scores to foster community trust.</div>
-        <div class="proj-tech"><span class="tech-tag">React (Vite)</span><span class="tech-tag">Node.js</span><span class="tech-tag">Express.js</span><span class="tech-tag">Prisma ORM</span><span class="tech-tag">Tailwind CSS</span></div>
+        <div class="proj-desc">Full-stack carpool platform supporting ride posting, search, and passenger/driver bookings. Implemented mandatory vehicle detail capture and a two-way user rating system[...]
+        <div class="proj-tech"><span class="tech-tag">React (Vite)</span><span class="tech-tag">Node.js</span><span class="tech-tag">Express.js</span><span class="tech-tag">Prisma ORM</span><span class[...]
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     </div>
@@ -445,7 +445,7 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2026</span></div>
         <div class="proj-name">Custom MARS MIPS Assembler Extension</div>
-        <div class="proj-desc">Extended the MARS MIPS simulator by adding custom assembler directives and user-defined data types. Implemented a new .intarray directive simplifying integer array allocation, updating assembler parsing, directive handling, and memory allocation logic inside the MARS source code.</div>
+        <div class="proj-desc">Extended the MARS MIPS simulator by adding custom assembler directives and user-defined data types. Implemented a new .intarray directive simplifying integer array alloc[...]
         <div class="proj-tech"><span class="tech-tag">Java</span><span class="tech-tag">MIPS Assembly</span><span class="tech-tag">IntelliJ IDEA</span></div>
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -456,7 +456,7 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2025</span></div>
         <div class="proj-name">Context Switching Simulation — OS Project</div>
-        <div class="proj-desc">Simulation of CPU context switching demonstrating process state management, scheduling, and CPU execution flow. Implemented process control mechanisms, register/state saving and restoration, and simulated task switching between multiple processes to visualise multitasking behaviour.</div>
+        <div class="proj-desc">Simulation of CPU context switching demonstrating process state management, scheduling, and CPU execution flow. Implemented process control mechanisms, register/state sa[...]
         <div class="proj-tech"><span class="tech-tag">C++</span><span class="tech-tag">Operating Systems</span><span class="tech-tag">Multithreading</span></div>
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -467,7 +467,7 @@
       <div class="proj-body">
         <div class="proj-meta"><span class="proj-year">2024</span></div>
         <div class="proj-name">Pharmacy Management System</div>
-        <div class="proj-desc">Java OOP application managing drug inventory, sales tracking, and prescriptions. Integrated MySQL for persistent data storage and Java Swing for a responsive GUI, improving workflow efficiency by 30%.</div>
+        <div class="proj-desc">Java OOP application managing drug inventory, sales tracking, and prescriptions. Integrated MySQL for persistent data storage and Java Swing for a responsive GUI, improv[...]
         <div class="proj-tech"><span class="tech-tag">Java</span><span class="tech-tag">OOP</span><span class="tech-tag">MySQL</span><span class="tech-tag">Swing GUI</span></div>
       </div>
       <div class="proj-arrow">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -544,12 +544,12 @@
     <div class="sec-line"></div>
   </div>
   <div class="certs-list reveal">
-    <div class="cert-row"><div class="cert-icon">🏛️</div><div><div class="cert-name">AI: Machine Learning & Deep Learning</div><div class="cert-by">NAVTTC · PM's Hunarmand Pakistan Program (PMYP) · Government of Pakistan · 3 Months</div></div><div class="cert-badge">Government</div></div>
-    <div class="cert-row"><div class="cert-icon">🌐</div><div><div class="cert-name">Advanced Google AI Essentials</div><div class="cert-by">Coursera / Google</div></div><div class="cert-badge">Industry</div></div>
-    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Data Structures & Algorithms</div><div class="cert-by">COMSATS University Islamabad</div></div><div class="cert-badge">Academic</div></div>
-    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Machine Learning Fundamentals</div><div class="cert-by">COMSATS University Islamabad</div></div><div class="cert-badge">Academic</div></div>
-    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Database & Advanced Database Systems</div><div class="cert-by">COMSATS University Islamabad</div></div><div class="cert-badge">Academic</div></div>
-    <div class="cert-row"><div class="cert-icon">🤖</div><div><div class="cert-name">Artificial Intelligence · NLP · Deep Learning · Azure AI</div><div class="cert-by">NAVTTC / PMYP</div></div><div class="cert-badge">Government</div></div>
+    <div class="cert-row"><div class="cert-icon">🏛️</div><div><div class="cert-name">AI: Machine Learning & Deep Learning</div><div class="cert-by">NAVTTC · PM's Hunarmand Pakistan Program (PMYP[...]
+    <div class="cert-row"><div class="cert-icon">🌐</div><div><div class="cert-name">Advanced Google AI Essentials</div><div class="cert-by">Coursera / Google</div></div><div class="cert-badge">Indu[...]
+    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Data Structures & Algorithms</div><div class="cert-by">COMSATS University Islamabad</div></div><div class="cert-b[...]
+    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Machine Learning Fundamentals</div><div class="cert-by">COMSATS University Islamabad</div></div><div class="cert-[...]
+    <div class="cert-row"><div class="cert-icon">🎓</div><div><div class="cert-name">Database & Advanced Database Systems</div><div class="cert-by">COMSATS University Islamabad</div></div><div class[...]
+    <div class="cert-row"><div class="cert-icon">🤖</div><div><div class="cert-name">Artificial Intelligence · NLP · Deep Learning · Azure AI</div><div class="cert-by">NAVTTC / PMYP</div></div><d[...]
   </div>
 </section>
 
@@ -561,12 +561,12 @@
     <div class="sec-line"></div>
   </div>
   <div class="ach-grid reveal">
-    <div class="ach-card"><span class="ach-emoji">🥇</span><div><span class="ach-ttl">Best Speech Award</span><span class="ach-desc">Annual Speech Competition, Government Graduate College Taunsa — recognised for excellence in articulation.</span></div></div>
-    <div class="ach-card"><span class="ach-emoji">🏆</span><div><span class="ach-ttl">1st Position — Speech Competition</span><span class="ach-desc">Ranked first in the Annual Speech Competition for outstanding presentation and communication skills.</span></div></div>
-    <div class="ach-card"><span class="ach-emoji">🏅</span><div><span class="ach-ttl">Best Kabaddi Player</span><span class="ach-desc">Recognised for outstanding sportsmanship and performance at college-level kabaddi competitions.</span></div></div>
-    <div class="ach-card"><span class="ach-emoji">🌱</span><div><span class="ach-ttl">Environmental Awareness Award</span><span class="ach-desc">Led a tree plantation drive promoted through audio, video, and print campaigns.</span></div></div>
-    <div class="ach-card"><span class="ach-emoji">🎖️</span><div><span class="ach-ttl">Volunteer Leadership Certificate</span><span class="ach-desc">Erudite Coaching Centre — awarded for impactful coordination of student initiatives.</span></div></div>
-    <div class="ach-card"><span class="ach-emoji">🎤</span><div><span class="ach-ttl">Guest Speaker</span><span class="ach-desc">Invited to speak at 'Interactive Session with Students and Graduates of Top Pakistani Universities.'</span></div></div>
+    <div class="ach-card"><span class="ach-emoji">🥇</span><div><span class="ach-ttl">Best Speech Award</span><span class="ach-desc">Annual Speech Competition, Government Graduate College Taunsa —[...]
+    <div class="ach-card"><span class="ach-emoji">🏆</span><div><span class="ach-ttl">1st Position — Speech Competition</span><span class="ach-desc">Ranked first in the Annual Speech Competition f[...]
+    <div class="ach-card"><span class="ach-emoji">🏅</span><div><span class="ach-ttl">Best Kabaddi Player</span><span class="ach-desc">Recognised for outstanding sportsmanship and performance at col[...]
+    <div class="ach-card"><span class="ach-emoji">🌱</span><div><span class="ach-ttl">Environmental Awareness Award</span><span class="ach-desc">Led a tree plantation drive promoted through audio, v[...]
+    <div class="ach-card"><span class="ach-emoji">🎖️</span><div><span class="ach-ttl">Volunteer Leadership Certificate</span><span class="ach-desc">Erudite Coaching Centre — awarded for impactf[...]
+    <div class="ach-card"><span class="ach-emoji">🎤</span><div><span class="ach-ttl">Guest Speaker</span><span class="ach-desc">Invited to speak at 'Interactive Session with Students and Graduates [...]
   </div>
 </section>
 
@@ -577,15 +577,15 @@
     <p class="contact-sub">Open to AI/ML internships, research collaborations, and interesting engineering projects.</p>
     <div class="contact-links">
       <a href="mailto:salarbaloch195@gmail.com" class="c-link">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2[...]
         salarbaloch195@gmail.com
       </a>
-      <a href="https://linkedin.com/in/salarabdullah-2657b92a7" target="_blank" class="c-link">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <a href="https://www.linkedin.com/in/salar-abdullah-2657b92a7" target="_blank" class="c-link">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.5[...]
         LinkedIn
       </a>
       <a href="https://github.com/salar-baloch" target="_blank" class="c-link">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.33[...]
         GitHub
       </a>
       <a href="https://huggingface.co/salar17" target="_blank" class="c-link">🤗 HuggingFace</a>
