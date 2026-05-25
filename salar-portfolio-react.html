@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Salar Abdullah — AI/ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060810;--bg2:#0a0d18;--surface:#101420;--surface2:#161b2e;
+  --border:rgba(255,255,255,0.08);--border-hi:rgba(255,255,255,0.18);
+  --text:#f1f3fb;--sub:#b0bcd8;--dim:#6b7a9e;
+  --cyan:#22d3ee;--violet:#a78bfa;--amber:#fbbf24;--green:#34d399;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(34,211,238,0.4);border-radius:4px}
+::selection{background:rgba(34,211,238,0.25);color:var(--text)}
+a,button{cursor:none}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}100%{box-shadow:0 0 0 10px rgba(52,211,153,0)}}
+@keyframes gridMove{0%{background-position:0 0}100%{background-position:60px 60px}}
+@keyframes float{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-28px) scale(1.3);opacity:.8}}
+@keyframes glowPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typeBar{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+const { motion, useInView, useMotionValue, useTransform, useSpring, AnimatePresence } = window.Motion || window.FramerMotion || {};
+
+/* ─── FRAMER SHIM if CDN key differs ─── */
+const M = window.Motion || window.FramerMotion || window.framerMotion || {};
+const Mot = M.motion || {};
+const useInViewFn = M.useInView || ((ref) => { const [v,setV]=useState(false); useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true)},{threshold:0.1,rootMargin:'-60px'}); if(ref.current)o.observe(ref.current); return()=>o.disconnect()},[ref]); return v; });
+
+/* ─── MOTION WRAPPER ─── */
+function Fade({children, delay=0, x=0, y=32, style={}, once=true}){
+  const ref=useRef(null);
+  const [vis,setVis]=useState(false);
+  useEffect(()=>{
+    const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){setVis(true);o.disconnect();}},{threshold:0.08,rootMargin:'-50px'});
+    if(ref.current)o.observe(ref.current);
+    return()=>o.disconnect();
+  },[]);
+  return(
+    <div ref={ref} style={{
+      opacity: vis?1:0,
+      transform: vis?'none':`translate(${x}px,${y}px)`,
+      transition:`opacity .7s ${delay}s cubic-bezier(0.16,1,0.3,1), transform .7s ${delay}s cubic-bezier(0.16,1,0.3,1)`,
+      ...style
+    }}>{children}</div>
+  );
+}
+
+/* ─── CURSOR ─── */
+function Cursor(){
+  const [pos,setPos]=useState({x:-200,y:-200});
+  const [rpos,setRpos]=useState({x:-200,y:-200});
+  const [hov,setHov]=useState(false);
+  const rx=useRef(-200),ry=useRef(-200);
+  useEffect(()=>{
+    const mv=e=>{setPos({x:e.clientX,y:e.clientY});};
+    window.addEventListener('mousemove',mv);
+    let raf;
+    const loop=()=>{
+      rx.current+=(pos.x-rx.current)*.11;
+      ry.current+=(pos.y-ry.current)*.11;
+      setRpos({x:rx.current,y:ry.current});
+      raf=requestAnimationFrame(loop);
+    };
+    raf=requestAnimationFrame(loop);
+    const addH=()=>document.querySelectorAll('a,button,[data-h]').forEach(el=>{
+      el.addEventListener('mouseenter',()=>setHov(true));
+      el.addEventListener('mouseleave',()=>setHov(false));
+    });
+    addH();
+    return()=>{window.removeEventListener('mousemove',mv);cancelAnimationFrame(raf);};
+  },[pos.x,pos.y]);
+  return(<>
+    <div style={{position:'fixed',width:9,height:9,borderRadius:'50%',background:'#22d3ee',left:pos.x,top:pos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9999,mixBlendMode:'screen'}}/>
+    <div style={{position:'fixed',width:hov?52:36,height:hov?52:36,borderRadius:'50%',border:`1.5px solid ${hov?'#22d3ee':'rgba(34,211,238,.4)'}`,left:rpos.x,top:rpos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9998,transition:'width .2s,height .2s,border-color .2s'}}/>
+  </>);
+}
+
+/* ─── NAVBAR ─── */
+function Navbar(){
+  const [sc,setSc]=useState(false);
+  useEffect(()=>{const f=()=>setSc(window.scrollY>40);window.addEventListener('scroll',f);return()=>window.removeEventListener('scroll',f);},[]);
+  const nav=['About','Skills','Projects','Experience','Contact'];
+  return(
+    <nav style={{
+      position:'fixed',top:0,left:0,right:0,zIndex:200,
+      padding:'0 56px',height:70,
+      display:'flex',alignItems:'center',justifyContent:'space-between',
+      borderBottom:sc?'1px solid rgba(255,255,255,0.08)':'1px solid transparent',
+      background:sc?'rgba(6,8,16,.88)':'transparent',
+      backdropFilter:sc?'blur(24px)':'none',
+      transition:'background .4s,border-color .4s',
+    }}>
+      <a href="#" style={{fontFamily:'Bebas Neue',fontSize:28,color:'#f1f3fb',textDecoration:'none',letterSpacing:2}}>
+        SA<span style={{color:'#22d3ee'}}>.</span>
+      </a>
+      <ul style={{display:'flex',gap:40,listStyle:'none'}}>
+        {nav.map(l=>(
+          <li key={l}><a href={`#${l.toLowerCase()}`} style={{textDecoration:'none',color:'#b0bcd8',fontSize:14,fontWeight:500,transition:'color .2s'}}
+            onMouseEnter={e=>e.target.style.color='#f1f3fb'} onMouseLeave={e=>e.target.style.color='#b0bcd8'}>{l}</a></li>
+        ))}
+      </ul>
+      <a href="mailto:salarbaloch195@gmail.com"
+        style={{padding:'10px 24px',border:'1.5px solid #22d3ee',borderRadius:6,color:'#22d3ee',textDecoration:'none',fontSize:13,fontWeight:700,transition:'all .2s'}}
+        onMouseEnter={e=>{e.target.style.background='#22d3ee';e.target.style.color='#060810';}}
+        onMouseLeave={e=>{e.target.style.background='transparent';e.target.style.color='#22d3ee';}}>
+        Hire Me
+      </a>
+    </nav>
+  );
+}
+
+/* ─── TYPEWRITER ─── */
+function Typewriter({words}){
+  const [idx,setIdx]=useState(0);
+  const [txt,setTxt]=useState('');
+  const [del,setDel]=useState(false);
+  useEffect(()=>{
+    const word=words[idx];
+    let t;
+    if(!del&&txt.length<word.length) t=setTimeout(()=>setTxt(word.slice(0,txt.length+1)),80);
+    else if(!del&&txt.length===word.length) t=setTimeout(()=>setDel(true),1800);
+    else if(del&&txt.length>0) t=setTimeout(()=>setTxt(txt.slice(0,-1)),45);
+    else if(del&&txt.length===0){setDel(false);setIdx((idx+1)%words.length);}
+    return()=>clearTimeout(t);
+  },[txt,del,idx,words]);
+  return<span>{txt}<span style={{color:'#22d3ee',animation:'typeBar .6s infinite'}}>|</span></span>;
+}
+
+/* ─── HERO ─── */
+function Hero(){
+  const ptcls=[{x:12,y:18,s:7,d:4},{x:78,y:12,s:5,d:5.5},{x:88,y:62,s:9,d:3.8},{x:8,y:72,s:5,d:6},{x:52,y:88,s:4,d:4.5},{x:92,y:28,s:7,d:5},{x:34,y:8,s:4,d:7},{x:62,y:76,s:6,d:4.2}];
+  const chips=['Python','YOLOv8','PyTorch','LLMs','OpenCV','React','Flutter','Gemini API'];
+  const stats=[['10+','Projects'],['5+','Certs'],['3yr','Exp.'],['AI','Focus']];
+  const bars=[['Python',92],['ML / CV',86],['LLMs',81],['Full Stack',73]];
+  const [loaded,setLoaded]=useState(false);
+  useEffect(()=>{setTimeout(()=>setLoaded(true),100);},[]);
+
+  return(
+    <section id="hero" style={{minHeight:'100vh',display:'grid',gridTemplateColumns:'1.1fr 0.9fr',alignItems:'center',padding:'140px 56px 100px',position:'relative',overflow:'hidden',gap:64}}>
+
+      {/* animated grid bg */}
+      <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(34,211,238,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,0.03) 1px,transparent 1px)',backgroundSize:'60px 60px',animation:'gridMove 20s linear infinite',pointerEvents:'none'}}/>
+
+      {/* glows */}
+      <div style={{position:'absolute',top:'10%',right:'5%',width:500,height:500,background:'radial-gradient(circle,rgba(34,211,238,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 6s ease-in-out infinite'}}/>
+      <div style={{position:'absolute',bottom:'5%',left:'0%',width:420,height:420,background:'radial-gradient(circle,rgba(167,139,250,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 8s ease-in-out 2s infinite'}}/>
+
+      {/* particles */}
+      {ptcls.map((p,i)=>(
+        <div key={i} style={{position:'absolute',left:`${p.x}%`,top:`${p.y}%`,width:p.s,height:p.s,borderRadius:'50%',background:'rgba(34,211,238,0.15)',animation:`float ${p.d}s ease-in-out ${i*0.4}s infinite`,pointerEvents:'none'}}/>
+      ))}
+
+      {/* LEFT */}
+      <div style={{position:'relative',zIndex:1}}>
+        <div style={{display:'inline-flex',alignItems:'center',gap:10,padding:'8px 18px',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:100,marginBottom:36,opacity:loaded?1:0,transform:loaded?'none':'translateY(20px)',transition:'all .7s .2s'}}>
+          <span style={{width:8,height:8,background:'#34d399',borderRadius:'50%',display:'inline-block',animation:'ping 1.8s infinite'}}/>
+          <span style={{fontSize:13,fontWeight:500,color:'#b0bcd8'}}>Available for Internship</span>
+        </div>
+
+        <h1 style={{fontFamily:'Bebas Neue',fontSize:'clamp(60px,8vw,108px)',lineHeight:.9,letterSpacing:2,color:'#f1f3fb',marginBottom:8,opacity:loaded?1:0,transform:loaded?'none':'translateY(40px)',transition:'all .8s .3s cubic-bezier(0.16,1,0.3,1)'}}>
+          Salar<br/>
+          <span style={{color:'transparent',WebkitTextStroke:'2px rgba(241,243,251,0.2)',display:'block'}}>Abdullah</span>
+        </h1>
+
+        <div style={{fontSize:'clamp(18px,2.2vw,26px)',color:'#22d3ee',fontWeight:700,marginTop:20,marginBottom:22,minHeight:36,opacity:loaded?1:0,transition:'opacity .7s .5s'}}>
+          <Typewriter words={['AI / ML Engineer','Computer Vision Dev','LLM App Builder','Full Stack Engineer']}/>
+        </div>
+
+        <p style={{fontSize:16,color:'#b0bcd8',lineHeight:1.8,maxWidth:480,marginBottom:40,opacity:loaded?1:0,transform:loaded?'none':'translateY(20px)',transition:'all .7s .6s'}}>
+          Final-year CS student at COMSATS University. Building end-to-end AI pipelines, computer vision systems, and LLM-powered apps that solve real-world problems.
+        </p>
+
+        <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:40,opacity:loaded?1:0,transition:'opacity .7s .7s'}}>
+          {chips.map((c,i)=>(
+            <span key={c}
+              style={{padding:'6px 14px',border:'1px solid rgba(255,255,255,0.12)',borderRadius:100,fontSize:12,fontWeight:600,color:'#b0bcd8',background:'rgba(255,255,255,0.03)',transition:'all .2s',transitionDelay:`${i*0.05}s`,opacity:loaded?1:0,transform:loaded?'scale(1)':'scale(0.7)'}}
+              onMouseEnter={e=>{e.target.style.background='rgba(34,211,238,0.12)';e.target.style.borderColor='#22d3ee';e.target.style.color='#22d3ee';}}
+              onMouseLeave={e=>{e.target.style.background='rgba(255,255,255,0.03)';e.target.style.borderColor='rgba(255,255,255,0.12)';e.target.style.color='#b0bcd8';}}
+            >{c}</span>
+          ))}
+        </div>
+
+        <div style={{display:'flex',gap:14,opacity:loaded?1:0,transform:loaded?'none':'translateY(20px)',transition:'all .7s 1s'}}>
+          <a href="#projects"
+            style={{display:'inline-flex',alignItems:'center',gap:10,padding:'14px 32px',background:'#22d3ee',color:'#060810',borderRadius:8,textDecoration:'none',fontWeight:800,fontSize:14,border:'1.5px solid #22d3ee',transition:'all .2s'}}
+            onMouseEnter={e=>{e.target.style.background='transparent';e.target.style.color='#22d3ee';e.target.style.boxShadow='0 0 28px rgba(34,211,238,0.35)';}}
+            onMouseLeave={e=>{e.target.style.background='#22d3ee';e.target.style.color='#060810';e.target.style.boxShadow='none';}}>
+            View Projects →
+          </a>
+          <a href="mailto:salarbaloch195@gmail.com"
+            style={{display:'inline-flex',alignItems:'center',padding:'14px 32px',border:'1.5px solid rgba(255,255,255,0.15)',color:'#b0bcd8',borderRadius:8,textDecoration:'none',fontWeight:600,fontSize:14,transition:'all .2s'}}
+            onMouseEnter={e=>{e.target.style.borderColor='rgba(255,255,255,0.35)';e.target.style.color='#f1f3fb';}}
+            onMouseLeave={e=>{e.target.style.borderColor='rgba(255,255,255,0.15)';e.target.style.color='#b0bcd8';}}>
+            Get in Touch
+          </a>
+        </div>
+      </div>
+
+      {/* RIGHT — 3D card */}
+      <div style={{position:'relative',zIndex:1,opacity:loaded?1:0,transform:loaded?'none':'translateX(60px)',transition:'all .9s .5s cubic-bezier(0.16,1,0.3,1)'}}>
+        <div style={{background:'var(--surface)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:20,padding:40,position:'relative',overflow:'hidden',boxShadow:'0 24px 80px rgba(0,0,0,0.5)'}}>
+          <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:'linear-gradient(90deg,#22d3ee,#a78bfa,#fbbf24)'}}/>
+          <p style={{fontSize:11,letterSpacing:3,color:'#6b7a9e',textTransform:'uppercase',marginBottom:28,fontWeight:600}}>// Profile Stats</p>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+            {stats.map(([v,l])=>(
+              <div key={l}>
+                <div style={{fontFamily:'Bebas Neue',fontSize:44,color:'#f1f3fb',letterSpacing:1,lineHeight:1}}>{v}</div>
+                <div style={{fontSize:12,color:'#b0bcd8',marginTop:4,fontWeight:500}}>{l}</div>
+              </div>
+            ))}
+          </div>
+          {bars.map(([n,p],i)=>(
+            <div key={n} style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
+              <span style={{fontSize:13,color:'#b0bcd8',width:72,fontWeight:500,flexShrink:0}}>{n}</span>
+              <div style={{flex:1,height:3,background:'rgba(255,255,255,0.07)',borderRadius:3,overflow:'hidden'}}>
+                <div style={{width:`${p}%`,height:'100%',background:'linear-gradient(90deg,#22d3ee,#a78bfa)',borderRadius:3,animation:`barIn 1.2s ${1+i*.15}s ease both`,transformOrigin:'left'}}/>
+              </div>
+              <span style={{fontSize:12,color:'#6b7a9e',width:30,textAlign:'right',fontWeight:500}}>{p}%</span>
+            </div>
+          ))}
+          <div style={{marginTop:24,paddingTop:20,borderTop:'1px solid rgba(255,255,255,0.07)',fontSize:13,color:'#b0bcd8',fontWeight:500}}>
+            📍 Islamabad, Pakistan · COMSATS University
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── SEC HEADER ─── */
+function SecHeader({num,title}){
+  const ref=useRef(null);
+  const [vis,setVis]=useState(false);
+  useEffect(()=>{
+    const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){setVis(true);o.disconnect();}},{threshold:0.1,rootMargin:'-60px'});
+    if(ref.current)o.observe(ref.current);
+    return()=>o.disconnect();
+  },[]);
+  return(
+    <div ref={ref} style={{display:'flex',alignItems:'center',gap:20,marginBottom:64}}>
+      <span style={{fontFamily:'Bebas Neue',fontSize:14,color:'#22d3ee',letterSpacing:3,opacity:vis?1:0,transition:'opacity .5s, transform .5s',transform:vis?'none':'translateX(-20px)'}}>{num}</span>
+      <h2 style={{fontFamily:'Bebas Neue',fontSize:'clamp(32px,4vw,52px)',letterSpacing:1.5,color:'#f1f3fb',opacity:vis?1:0,transition:'opacity .5s .08s, transform .5s .08s',transform:vis?'none':'translateX(-20px)'}}>{title}</h2>
+      <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)',transform:vis?'scaleX(1)':'scaleX(0)',transformOrigin:'left',transition:'transform .7s .2s'}}/>
+    </div>
+  );
+}
+
+/* ─── ABOUT ─── */
+function About(){
+  const details=[['University','COMSATS University Islamabad'],['Degree','BS Computer Science · 5th Semester Completed'],['Email','salarbaloch195@gmail.com'],['Phone','+92 329 7817920'],['Languages','English (Intermediate) · Urdu (Native)'],['Location','Islamabad, Pakistan']];
+  return(
+    <section id="about" style={{padding:'100px 56px',position:'relative',zIndex:1}}>
+      <SecHeader num="01" title="About Me"/>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:72,alignItems:'start'}}>
+        <Fade delay={0}>
+          <p style={{fontSize:'clamp(18px,1.8vw,24px)',lineHeight:1.65,color:'#f1f3fb',fontWeight:300}}>
+            I'm a final-year CS student passionate about{' '}
+            <em style={{color:'#22d3ee',fontStyle:'italic',fontWeight:700}}>artificial intelligence,</em>{' '}
+            <em style={{color:'#a78bfa',fontStyle:'italic',fontWeight:700}}>machine learning,</em>{' '}
+            and{' '}
+            <em style={{color:'#fbbf24',fontStyle:'italic',fontWeight:700}}>computer vision.</em>{' '}
+            I build production-grade systems that turn academic research into real-world impact.
+          </p>
+          <div style={{height:1,background:'linear-gradient(90deg,#22d3ee,transparent)',margin:'36px 0',transformOrigin:'left'}}/>
+          <p style={{fontSize:15,color:'#b0bcd8',lineHeight:1.8,fontWeight:400}}>Currently seeking an AI/ML internship to contribute cutting-edge solutions and grow alongside industry leaders.</p>
+        </Fade>
+        <div style={{display:'flex',flexDirection:'column',gap:12}}>
+          {details.map(([lbl,val],i)=>(
+            <Fade key={lbl} delay={i*0.07} x={40} y={0}>
+              <div
+                style={{padding:'16px 22px',background:'var(--surface)',border:'1px solid rgba(255,255,255,0.07)',borderLeft:'3px solid rgba(34,211,238,0.4)',borderRadius:8,transition:'all .2s'}}
+                onMouseEnter={e=>{e.currentTarget.style.borderLeftColor='#22d3ee';e.currentTarget.style.transform='translateX(6px)';}}
+                onMouseLeave={e=>{e.currentTarget.style.borderLeftColor='rgba(34,211,238,0.4)';e.currentTarget.style.transform='none';}}
+              >
+                <div style={{fontSize:11,letterSpacing:2,textTransform:'uppercase',color:'#6b7a9e',marginBottom:4,fontWeight:700}}>{lbl}</div>
+                <div style={{fontSize:14,color:'#f1f3fb',fontWeight:500}}>{val}</div>
+              </div>
+            </Fade>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── SKILLS ─── */
+const skillCats=[
+  {label:'Languages',color:'#22d3ee',tags:['Python','Java','C++','SQL','Dart']},
+  {label:'AI / ML',color:'#a78bfa',hot:['PyTorch','TensorFlow','YOLOv8','OpenCV'],tags:['PyTorch','TensorFlow','YOLOv8','OpenCV','scikit-learn','NumPy','Pandas','Matplotlib','Seaborn']},
+  {label:'LLM & APIs',color:'#fbbf24',hot:['Gemini API','Groq API'],tags:['Gemini API','Groq API','Tesseract OCR','Streamlit','Flask']},
+  {label:'Web & Mobile',color:'#34d399',tags:['React (Vite)','Node.js','Express.js','Flutter','Tailwind CSS','Prisma ORM']},
+  {label:'Databases',color:'#fb7185',tags:['MySQL','MongoDB','Firebase Firestore']},
+  {label:'Concepts',color:'#67e8f9',tags:['OOP','DSA','Computer Vision','Genetic Algorithms','REST APIs','MVC','OS Scheduling','Agile']},
+];
+function Skills(){
+  return(
+    <section id="skills" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1}}>
+      <SecHeader num="02" title="Technical Skills"/>
+      {skillCats.map((cat,ci)=>(
+        <Fade key={cat.label} delay={ci*0.07} x={-30} y={0}>
+          <div style={{display:'grid',gridTemplateColumns:'180px 1fr',gap:0,borderBottom:ci<skillCats.length-1?'1px solid rgba(255,255,255,0.07)':'none',padding:'26px 0',alignItems:'flex-start'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,paddingTop:8}}>
+              <span style={{width:8,height:8,borderRadius:'50%',background:cat.color,flexShrink:0,boxShadow:`0 0 8px ${cat.color}80`}}/>
+              <span style={{fontSize:12,letterSpacing:2,textTransform:'uppercase',color:'#b0bcd8',fontWeight:700}}>{cat.label}</span>
+            </div>
+            <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
+              {cat.tags.map((tag,ti)=>{
+                const hot=cat.hot?.includes(tag);
+                return(
+                  <span key={tag}
+                    style={{display:'inline-block',padding:'8px 18px',border:`1.5px solid ${hot?cat.color:'rgba(255,255,255,0.1)'}`,borderRadius:100,fontSize:13,fontWeight:hot?700:500,color:hot?cat.color:'#b0bcd8',background:hot?`${cat.color}12`:'transparent',transition:'all .2s',opacity:0,animation:`fadeUp .4s ${ci*0.06+ti*0.04}s ease both`}}
+                    onMouseEnter={e=>{e.target.style.transform='translateY(-3px) scale(1.08)';}}
+                    onMouseLeave={e=>{e.target.style.transform='none';}}
+                  >{tag}</span>
+                );
+              })}
+            </div>
+          </div>
+        </Fade>
+      ))}
+    </section>
+  );
+}
+
+/* ─── PROJECTS ─── */
+const projects=[
+  {icon:'🤖',year:'2026',feat:true,name:'AI-Powered ATS Pipeline',desc:'Enterprise Document AI for automated semantic resume screening. Combined YOLOv8, Tesseract OCR, and LLMs to parse complex multi-column PDFs. Engineered API failover (Gemini → Groq) ensuring continuous uptime.',tech:['Python','YOLOv8','Gemini API','Groq API','Tesseract OCR','Streamlit']},
+  {icon:'📱',year:'2026',feat:true,name:'CreatorSpace — Digital Creator Community App',desc:'Full Flutter/Firebase mobile app with hierarchical data models for multi-level professional profiles, image evidence support, keyword search across nested metadata, two-way collaboration verification, and threaded notification centre.',tech:['Flutter','Dart','Firebase','Material 3','Cupertino UI']},
+  {icon:'👁️',year:'2025',name:'Advanced Face Detection & Recognition System',desc:'Production-grade Flask inference service with YOLOv8 lazy loading, OpenCV Haar fallback, and face-recognition pipelines (dlib) with configurable cosine/L2 matching overlaying names on live streams.',tech:['Python','YOLOv8','Flask','OpenCV','dlib','face_recognition']},
+  {icon:'📝',year:'2026',name:'AI-Based OMR / MCQ Grading System',desc:'Modular CV pipeline for automatic answer-sheet evaluation from camera. Geometric correction, adaptive binarization, bubble ROI analysis, and deterministic A/B/C/D mapping with JSON calibration anchors.',tech:['Python','OpenCV','Computer Vision','JSON Calibration']},
+  {icon:'🧬',year:'2025',name:'Smart Scheduler System',desc:'AI-powered scheduling via Genetic Algorithms. Evolutionary optimisation with constraint rules to generate conflict-free timetables handling room capacity, time-slot conflicts, and instructor availability.',tech:['Python','Genetic Algorithms','Artificial Intelligence']},
+  {icon:'🚗',year:'2025',name:'CarPool — Ride-Sharing Web Application',desc:'Full-stack carpool platform with ride posting, search, and passenger/driver bookings. Two-way user rating system with reputation scores to build community trust.',tech:['React (Vite)','Node.js','Express.js','Prisma ORM','Tailwind CSS']},
+  {icon:'⚙️',year:'2026',name:'Custom MARS MIPS Assembler Extension',desc:'Extended MARS MIPS simulator with custom directives. New .intarray directive simplifies integer array allocation by updating assembler parsing and memory allocation logic.',tech:['Java','MIPS Assembly','IntelliJ IDEA']},
+  {icon:'💻',year:'2025',name:'Context Switching Simulation — OS Project',desc:'CPU context switching simulation demonstrating process state management, scheduling, and execution flow with register/state saving, restoration, and multi-process task switching.',tech:['C++','Operating Systems','Multithreading']},
+  {icon:'💊',year:'2024',name:'Pharmacy Management System',desc:'Java OOP app managing drug inventory, sales tracking, and prescriptions with MySQL for persistent storage and Swing GUI, improving workflow efficiency by 30%.',tech:['Java','OOP','MySQL','Swing GUI']},
+  {icon:'🛒',year:'2024',name:'E-Commerce Management System',desc:'C++ e-commerce system with priority queue for order management, AVL tree for inventory, and linked-list for shopping-cart operations.',tech:['C++','Data Structures','AVL Tree']},
+];
+function Projects(){
+  return(
+    <section id="projects" style={{padding:'100px 56px',position:'relative',zIndex:1}}>
+      <SecHeader num="03" title="Projects"/>
+      <div style={{display:'flex',flexDirection:'column',gap:20}}>
+        {projects.map((p,i)=>(
+          <Fade key={p.name} delay={i*0.04} x={-20} y={30}>
+            <div
+              style={{display:'grid',gridTemplateColumns:'68px 1fr auto',gap:28,alignItems:'flex-start',padding:'32px 36px',background:p.feat?'linear-gradient(135deg,rgba(34,211,238,0.05),var(--surface))':'var(--surface)',border:`1px solid ${p.feat?'rgba(34,211,238,0.22)':'rgba(255,255,255,0.07)'}`,borderRadius:14,position:'relative',overflow:'hidden',transition:'transform .25s, border-color .25s, background .25s'}}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateX(6px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.18)';}}
+              onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor=p.feat?'rgba(34,211,238,0.22)':'rgba(255,255,255,0.07)';}}
+            >
+              {/* left bar */}
+              <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(180deg,#22d3ee,#a78bfa)',borderRadius:'3px 0 0 3px'}}/>
+              {/* icon */}
+              <div style={{width:56,height:56,background:'var(--surface2)',border:'1.5px solid rgba(255,255,255,0.1)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,flexShrink:0,transition:'transform .2s'}}
+                onMouseEnter={e=>{e.currentTarget.style.transform='scale(1.15) rotate(5deg)';}}
+                onMouseLeave={e=>{e.currentTarget.style.transform='none';}}
+              >{p.icon}</div>
+              {/* body */}
+              <div style={{minWidth:0}}>
+                <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:10}}>
+                  <span style={{fontSize:12,color:'#6b7a9e',fontWeight:500}}>{p.year}</span>
+                  {p.feat&&<span style={{padding:'3px 10px',borderRadius:100,fontSize:11,fontWeight:700,background:'rgba(34,211,238,0.12)',border:'1px solid rgba(34,211,238,0.35)',color:'#22d3ee'}}>⭐ Featured</span>}
+                </div>
+                <h3 style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:.8,color:'#f1f3fb',marginBottom:10,lineHeight:1.2}}>{p.name}</h3>
+                <p style={{fontSize:14,color:'#b0bcd8',lineHeight:1.75,marginBottom:16,fontWeight:400}}>{p.desc}</p>
+                <div style={{display:'flex',flexWrap:'wrap',gap:7}}>
+                  {p.tech.map(t=>(
+                    <span key={t}
+                      style={{padding:'4px 12px',background:'rgba(167,139,250,0.07)',border:'1px solid rgba(167,139,250,0.2)',borderRadius:100,fontSize:12,color:'#a78bfa',fontWeight:600,transition:'all .2s'}}
+                      onMouseEnter={e=>{e.target.style.transform='scale(1.07)';e.target.style.background='rgba(167,139,250,0.15)';}}
+                      onMouseLeave={e=>{e.target.style.transform='none';e.target.style.background='rgba(167,139,250,0.07)';}}
+                    >{t}</span>
+                  ))}
+                </div>
+              </div>
+              {/* arrow */}
+              <div style={{fontSize:13,color:'#6b7a9e',fontWeight:600,whiteSpace:'nowrap',paddingTop:6,transition:'color .2s'}}
+                onMouseEnter={e=>{e.target.style.color='#22d3ee';}}
+                onMouseLeave={e=>{e.target.style.color='#6b7a9e';}}
+              >View →</div>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── EXPERIENCE ─── */
+function Experience(){
+  const pts=['Coordinated student-facing events and managed administrative workflows.','Contributed to ECC × COMSATS Wah Campus collaboration, earning Certificate of Achievement for leadership.',"Invited as Guest Speaker for 'Interactive Session with Students and Graduates of Top Pakistani Universities.'"];
+  return(
+    <section id="experience" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1}}>
+      <SecHeader num="04" title="Experience"/>
+      <div style={{position:'relative',paddingLeft:48}}>
+        <div style={{position:'absolute',left:0,top:0,bottom:0,width:1,background:'rgba(255,255,255,0.08)'}}/>
+        <div style={{position:'absolute',left:-5,top:4,width:11,height:11,background:'var(--bg2)',border:'2px solid #22d3ee',borderRadius:'50%'}}/>
+        <div style={{display:'grid',gridTemplateColumns:'200px 1fr',gap:48}}>
+          <div style={{fontSize:13,color:'#b0bcd8',fontWeight:500}}>Oct 2024 – Dec 2024</div>
+          <Fade>
+            <div style={{fontFamily:'Bebas Neue',fontSize:28,letterSpacing:1,color:'#f1f3fb',marginBottom:6}}>HR Intern</div>
+            <div style={{color:'#22d3ee',fontSize:15,fontWeight:700,marginBottom:20}}>Erudite Coaching Centre</div>
+            {pts.map((pt,i)=>(
+              <Fade key={i} delay={i*.1} x={20} y={0}>
+                <div style={{display:'flex',gap:12,fontSize:15,color:'#b0bcd8',lineHeight:1.7,marginBottom:12}}>
+                  <span style={{color:'#22d3ee',fontWeight:700,flexShrink:0}}>→</span>{pt}
+                </div>
+              </Fade>
+            ))}
+          </Fade>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── EDUCATION ─── */
+function Education(){
+  const schools=[
+    {deg:'Bachelor of Science in Computer Science',inst:'COMSATS University Islamabad',period:'Sep 2023 – Present · 5th Semester Completed',main:true},
+    {deg:'Intermediate — Pre-Engineering',inst:'Government Graduate College Taunsa',period:'Jun 2021 – Jun 2023'},
+    {deg:'Matriculation',inst:'Government Graduate College Taunsa',period:'May 2019 – May 2021'},
+  ];
+  return(
+    <section id="education" style={{padding:'100px 56px',position:'relative',zIndex:1}}>
+      <SecHeader num="05" title="Education"/>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
+        {schools.map((s,i)=>(
+          <Fade key={s.deg} delay={i*.12} y={40}>
+            <div
+              style={{padding:32,background:s.main?'linear-gradient(135deg,rgba(34,211,238,0.06),var(--surface))':'var(--surface)',border:`1px solid ${s.main?'rgba(34,211,238,0.3)':'rgba(255,255,255,0.07)'}`,borderRadius:14,position:'relative',overflow:'hidden',transition:'transform .25s, border-color .25s'}}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor=s.main?'#22d3ee':'rgba(255,255,255,0.2)';}}
+              onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor=s.main?'rgba(34,211,238,0.3)':'rgba(255,255,255,0.07)';}}
+            >
+              {s.main&&<div style={{position:'absolute',top:0,left:0,right:0,height:2,background:'linear-gradient(90deg,#22d3ee,#a78bfa)'}}/>}
+              <div style={{fontFamily:'Bebas Neue',fontSize:18,letterSpacing:.5,color:'#f1f3fb',marginBottom:8,lineHeight:1.3}}>{s.deg}</div>
+              <div style={{color:'#22d3ee',fontSize:13,fontWeight:700,marginBottom:10}}>{s.inst}</div>
+              <div style={{fontSize:12,color:'#6b7a9e',fontWeight:500}}>{s.period}</div>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── CERTIFICATIONS ─── */
+const certs=[
+  {icon:'🏛️',name:'AI: Machine Learning & Deep Learning',by:"NAVTTC · PM's Hunarmand Pakistan Program (PMYP) · 3 Months",badge:'Government'},
+  {icon:'🌐',name:'Advanced Google AI Essentials',by:'Coursera / Google',badge:'Industry'},
+  {icon:'🤖',name:'NLP · Deep Learning · Azure AI',by:'NAVTTC / PMYP Government of Pakistan',badge:'Government'},
+  {icon:'🎓',name:'Data Structures & Algorithms',by:'COMSATS University Islamabad',badge:'Academic'},
+  {icon:'🎓',name:'Machine Learning Fundamentals',by:'COMSATS University Islamabad',badge:'Academic'},
+  {icon:'🎓',name:'Database & Advanced Database Systems',by:'COMSATS University Islamabad',badge:'Academic'},
+];
+function Certifications(){
+  return(
+    <section style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1}}>
+      <SecHeader num="06" title="Certifications"/>
+      {certs.map((c,i)=>(
+        <Fade key={c.name} delay={i*.06} x={-30} y={0}>
+          <div
+            style={{display:'flex',alignItems:'center',gap:20,padding:'20px 0',borderBottom:i<certs.length-1?'1px solid rgba(255,255,255,0.07)':'none',transition:'padding-left .2s, border-left-color .2s',borderLeft:'3px solid transparent'}}
+            onMouseEnter={e=>{e.currentTarget.style.paddingLeft='10px';e.currentTarget.style.borderLeftColor='#22d3ee';}}
+            onMouseLeave={e=>{e.currentTarget.style.paddingLeft='0';e.currentTarget.style.borderLeftColor='transparent';}}
+          >
+            <div style={{width:46,height:46,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0,background:'var(--surface)'}}>{c.icon}</div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:15,color:'#f1f3fb',fontWeight:600,marginBottom:3}}>{c.name}</div>
+              <div style={{fontSize:13,color:'#b0bcd8',fontWeight:400}}>{c.by}</div>
+            </div>
+            <span style={{padding:'5px 14px',borderRadius:100,fontSize:11,fontWeight:700,letterSpacing:1,textTransform:'uppercase',border:'1.5px solid rgba(52,211,153,0.35)',color:'#34d399',flexShrink:0}}>{c.badge}</span>
+          </div>
+        </Fade>
+      ))}
+    </section>
+  );
+}
+
+/* ─── ACHIEVEMENTS ─── */
+const achs=[
+  {icon:'🥇',title:'Best Speech Award',desc:'Annual Speech Competition, Government Graduate College Taunsa.'},
+  {icon:'🏆',title:'1st Position — Speech Competition',desc:'Ranked first for outstanding presentation and communication skills.'},
+  {icon:'🏅',title:'Best Kabaddi Player',desc:'Recognised for outstanding sportsmanship at college-level competitions.'},
+  {icon:'🌱',title:'Environmental Awareness Award',desc:'Led a tree plantation drive via audio, video, and print campaigns.'},
+  {icon:'🎖️',title:'Volunteer Leadership Certificate',desc:'Erudite Coaching Centre — awarded for impactful initiative coordination.'},
+  {icon:'🎤',title:'Guest Speaker',desc:"Invited to 'Interactive Session with Students and Graduates of Top Pakistani Universities.'"},
+];
+function Achievements(){
+  return(
+    <section style={{padding:'100px 56px',position:'relative',zIndex:1}}>
+      <SecHeader num="07" title="Achievements"/>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
+        {achs.map((a,i)=>(
+          <Fade key={a.title} delay={i*.08} y={40}>
+            <div
+              style={{padding:28,background:'var(--surface)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:14,display:'flex',gap:18,alignItems:'flex-start',transition:'transform .2s, border-color .2s, box-shadow .2s'}}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.2)';e.currentTarget.style.boxShadow='0 16px 40px rgba(0,0,0,0.4)';}}
+              onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor='rgba(255,255,255,0.07)';e.currentTarget.style.boxShadow='none';}}
+            >
+              <span style={{fontSize:30,flexShrink:0}}>{a.icon}</span>
+              <div>
+                <div style={{fontFamily:'Bebas Neue',fontSize:16,letterSpacing:.5,color:'#f1f3fb',marginBottom:6}}>{a.title}</div>
+                <div style={{fontSize:13,color:'#b0bcd8',lineHeight:1.65,fontWeight:400}}>{a.desc}</div>
+              </div>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── CONTACT ─── */
+const contactLinks=[
+  {label:'Email',icon:'✉️',href:'mailto:salarbaloch195@gmail.com',text:'salarbaloch195@gmail.com',color:'#22d3ee'},
+  {label:'LinkedIn',icon:'💼',href:'https://www.linkedin.com/in/salar-abdullah-2657b92a7',text:'linkedin.com/in/salar-abdullah-2657b92a7',color:'#0a66c2'},
+  {label:'GitHub',icon:'🐙',href:'https://github.com/salar-baloch',text:'github.com/salar-baloch',color:'#f1f3fb'},
+  {label:'HuggingFace',icon:'🤗',href:'https://huggingface.co/salar17',text:'huggingface.co/salar17',color:'#fbbf24'},
+];
+function Contact(){
+  return(
+    <>
+    <section id="contact" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1,overflow:'hidden'}}>
+      <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',fontFamily:'Bebas Neue',fontSize:'clamp(80px,14vw,200px)',color:'rgba(255,255,255,0.02)',letterSpacing:8,whiteSpace:'nowrap',userSelect:'none',pointerEvents:'none',animation:'typeBar 5s ease-in-out infinite'}}>LET'S CONNECT</div>
+      <div style={{maxWidth:900,margin:'0 auto',textAlign:'center',position:'relative',zIndex:1}}>
+        <Fade>
+          <h2 style={{fontFamily:'Bebas Neue',fontSize:'clamp(52px,7vw,96px)',letterSpacing:2,lineHeight:.9,marginBottom:20}}>
+            Let's Build<br/>
+            <span style={{color:'#22d3ee'}}>Something</span><br/>
+            <span style={{color:'transparent',WebkitTextStroke:'2px rgba(241,243,251,0.18)'}}>Great</span>
+          </h2>
+          <p style={{fontSize:17,color:'#b0bcd8',marginBottom:60,fontWeight:400,lineHeight:1.7}}>
+            Open to AI/ML internships, research collaborations, and interesting engineering projects.
+          </p>
+        </Fade>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:14,maxWidth:700,margin:'0 auto'}}>
+          {contactLinks.map((l,i)=>(
+            <Fade key={l.label} delay={i*.1} y={30}>
+              <a href={l.href} target={l.href.startsWith('mailto')?'_self':'_blank'} rel="noopener noreferrer"
+                style={{display:'flex',alignItems:'center',gap:14,padding:'18px 24px',border:'1.5px solid rgba(255,255,255,0.12)',borderRadius:12,color:'#b0bcd8',textDecoration:'none',fontSize:14,fontWeight:600,background:'var(--surface)',transition:'all .25s'}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=l.color;e.currentTarget.style.color=l.color;e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow=`0 8px 30px ${l.color}22`;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(255,255,255,0.12)';e.currentTarget.style.color='#b0bcd8';e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none';}}
+              >
+                <span style={{fontSize:24,flexShrink:0}}>{l.icon}</span>
+                <div style={{textAlign:'left',minWidth:0}}>
+                  <div style={{fontSize:11,letterSpacing:1.5,textTransform:'uppercase',opacity:.6,marginBottom:2}}>{l.label}</div>
+                  <div style={{fontSize:13,fontWeight:700,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{l.text}</div>
+                </div>
+              </a>
+            </Fade>
+          ))}
+        </div>
+      </div>
+    </section>
+    <footer style={{padding:'28px 56px',display:'flex',alignItems:'center',justifyContent:'space-between',borderTop:'1px solid rgba(255,255,255,0.06)'}}>
+      <span style={{fontFamily:'Bebas Neue',fontSize:20,letterSpacing:2,color:'#f1f3fb'}}>SA<span style={{color:'#22d3ee'}}>.</span></span>
+      <span style={{fontSize:13,color:'#6b7a9e',fontWeight:400}}>© 2026 Salar Abdullah · Built with <span style={{color:'#22d3ee',fontWeight:700}}>React + CSS Animations</span></span>
+      <div style={{display:'flex',gap:20}}>
+        {[['LinkedIn','https://www.linkedin.com/in/salar-abdullah-2657b92a7','#0a66c2'],['GitHub','https://github.com/salar-baloch','#f1f3fb'],['HuggingFace','https://huggingface.co/salar17','#fbbf24']].map(([lbl,href,col])=>(
+          <a key={lbl} href={href} target="_blank" rel="noopener noreferrer"
+            style={{color:'#6b7a9e',textDecoration:'none',fontSize:13,fontWeight:600,transition:'color .2s, transform .2s'}}
+            onMouseEnter={e=>{e.target.style.color=col;e.target.style.transform='translateY(-2px)';}}
+            onMouseLeave={e=>{e.target.style.color='#6b7a9e';e.target.style.transform='none';}}
+          >{lbl}</a>
+        ))}
+      </div>
+    </footer>
+    </>
+  );
+}
+
+/* ─── APP ─── */
+function App(){
+  return(
+    <>
+      <Cursor/>
+      <Navbar/>
+      <Hero/>
+      <About/>
+      <Skills/>
+      <Projects/>
+      <Experience/>
+      <Education/>
+      <Certifications/>
+      <Achievements/>
+      <Contact/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
