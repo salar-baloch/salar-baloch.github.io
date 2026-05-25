@@ -46,7 +46,7 @@ const { motion, useInView, useMotionValue, useTransform, useSpring, AnimatePrese
 /* ─── FRAMER SHIM if CDN key differs ─── */
 const M = window.Motion || window.FramerMotion || window.framerMotion || {};
 const Mot = M.motion || {};
-const useInViewFn = M.useInView || ((ref) => { const [v,setV]=useState(false); useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true)},{threshold:0.1,rootMargin:'-60px'}); if(ref.current)o.observe(ref.current); return()=>o.disconnect()},[ref]); return v; });
+const useInViewFn = M.useInView || ((ref) => { const [v,setV]=useState(false); useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true)},{threshold:0.1,rootMargin:'-60px'}); if(ref.current)o.observe(ref.current); return()=>o.disconnect();},[ref]); return v; });
 
 /* ─── MOTION WRAPPER ─── */
 function Fade({children, delay=0, x=0, y=32, style={}, once=true}){
@@ -92,8 +92,8 @@ function Cursor(){
     return()=>{window.removeEventListener('mousemove',mv);cancelAnimationFrame(raf);};
   },[pos.x,pos.y]);
   return(<>
-    <div style={{position:'fixed',width:9,height:9,borderRadius:'50%',background:'#22d3ee',left:pos.x,top:pos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9999,mixBlendMode:'screen'}}/>
-    <div style={{position:'fixed',width:hov?52:36,height:hov?52:36,borderRadius:'50%',border:`1.5px solid ${hov?'#22d3ee':'rgba(34,211,238,.4)'}`,left:rpos.x,top:rpos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9998,transition:'width .2s,height .2s,border-color .2s'}}/>
+    <div style={{position:'fixed',width:9,height:9,borderRadius:'50%',background:'#22d3ee',left:pos.x,top:pos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9999,mixBlendMode:'screen',opacity:0.8}}/>
+    <div style={{position:'fixed',width:hov?52:36,height:hov?52:36,borderRadius:'50%',border:`1.5px solid ${hov?'#22d3ee':'rgba(34,211,238,.4)'}`,left:rpos.x,top:rpos.y,transform:'translate(-50%,-50%)',pointerEvents:'none',zIndex:9999,transition:'width .4s cubic-bezier(0.34,1.56,0.64,1), height .4s cubic-bezier(0.34,1.56,0.64,1), border-color .3s'}}/>
   </>);
 }
 
@@ -164,22 +164,22 @@ function Hero(){
       <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(34,211,238,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,0.03) 1px,transparent 1px)',backgroundSize:'60px 60px',animation:'gridMove 20s linear infinite',pointerEvents:'none'}}/>
 
       {/* glows */}
-      <div style={{position:'absolute',top:'10%',right:'5%',width:500,height:500,background:'radial-gradient(circle,rgba(34,211,238,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 6s ease-in-out infinite'}}/>
-      <div style={{position:'absolute',bottom:'5%',left:'0%',width:420,height:420,background:'radial-gradient(circle,rgba(167,139,250,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 8s ease-in-out 2s infinite'}}/>
+      <div style={{position:'absolute',top:'10%',right:'5%',width:500,height:500,background:'radial-gradient(circle,rgba(34,211,238,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 4s ease-in-out infinite'}}/>
+      <div style={{position:'absolute',bottom:'5%',left:'0%',width:420,height:420,background:'radial-gradient(circle,rgba(167,139,250,0.07) 0%,transparent 65%)',pointerEvents:'none',animation:'glowPulse 5.2s ease-in-out infinite'}}/>
 
       {/* particles */}
       {ptcls.map((p,i)=>(
-        <div key={i} style={{position:'absolute',left:`${p.x}%`,top:`${p.y}%`,width:p.s,height:p.s,borderRadius:'50%',background:'rgba(34,211,238,0.15)',animation:`float ${p.d}s ease-in-out ${i*0.4}s infinite`,pointerEvents:'none'}}/>
+        <div key={i} style={{position:'absolute',left:`${p.x}%`,top:`${p.y}%`,width:p.s,height:p.s,borderRadius:'50%',background:'rgba(34,211,238,0.15)',animation:`float ${p.d}s ease-in-out ${i*0.2}s infinite`}}/>
       ))}
 
       {/* LEFT */}
       <div style={{position:'relative',zIndex:1}}>
-        <div style={{display:'inline-flex',alignItems:'center',gap:10,padding:'8px 18px',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:100,marginBottom:36,opacity:loaded?1:0,transform:loaded?'none':'translateY(20px)',transition:'all .7s .2s'}}>
+        <div style={{display:'inline-flex',alignItems:'center',gap:10,padding:'8px 18px',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:100,marginBottom:36,opacity:loaded?1:0,transform:loaded?'none':'translateY(-20px)',transition:'all .7s .2s cubic-bezier(0.16,1,0.3,1)'}}>
           <span style={{width:8,height:8,background:'#34d399',borderRadius:'50%',display:'inline-block',animation:'ping 1.8s infinite'}}/>
           <span style={{fontSize:13,fontWeight:500,color:'#b0bcd8'}}>Available for Internship</span>
         </div>
 
-        <h1 style={{fontFamily:'Bebas Neue',fontSize:'clamp(60px,8vw,108px)',lineHeight:.9,letterSpacing:2,color:'#f1f3fb',marginBottom:8,opacity:loaded?1:0,transform:loaded?'none':'translateY(40px)',transition:'all .8s .3s cubic-bezier(0.16,1,0.3,1)'}}>
+        <h1 style={{fontFamily:'Bebas Neue',fontSize:'clamp(60px,8vw,108px)',lineHeight:.9,letterSpacing:2,color:'#f1f3fb',marginBottom:8,opacity:loaded?1:0,transform:loaded?'none':'translateY(40px)',transition:'all .7s .35s cubic-bezier(0.16,1,0.3,1)'}}>
           Salar<br/>
           <span style={{color:'transparent',WebkitTextStroke:'2px rgba(241,243,251,0.2)',display:'block'}}>Abdullah</span>
         </h1>
@@ -195,7 +195,7 @@ function Hero(){
         <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:40,opacity:loaded?1:0,transition:'opacity .7s .7s'}}>
           {chips.map((c,i)=>(
             <span key={c}
-              style={{padding:'6px 14px',border:'1px solid rgba(255,255,255,0.12)',borderRadius:100,fontSize:12,fontWeight:600,color:'#b0bcd8',background:'rgba(255,255,255,0.03)',transition:'all .2s',transitionDelay:`${i*0.05}s`,opacity:loaded?1:0,transform:loaded?'scale(1)':'scale(0.7)'}}
+              style={{padding:'6px 14px',border:'1px solid rgba(255,255,255,0.12)',borderRadius:100,fontSize:12,fontWeight:600,color:'#b0bcd8',background:'rgba(255,255,255,0.03)',transition:'all .2s',cursor:'none'}}
               onMouseEnter={e=>{e.target.style.background='rgba(34,211,238,0.12)';e.target.style.borderColor='#22d3ee';e.target.style.color='#22d3ee';}}
               onMouseLeave={e=>{e.target.style.background='rgba(255,255,255,0.03)';e.target.style.borderColor='rgba(255,255,255,0.12)';e.target.style.color='#b0bcd8';}}
             >{c}</span>
@@ -204,13 +204,13 @@ function Hero(){
 
         <div style={{display:'flex',gap:14,opacity:loaded?1:0,transform:loaded?'none':'translateY(20px)',transition:'all .7s 1s'}}>
           <a href="#projects"
-            style={{display:'inline-flex',alignItems:'center',gap:10,padding:'14px 32px',background:'#22d3ee',color:'#060810',borderRadius:8,textDecoration:'none',fontWeight:800,fontSize:14,border:'1.5px solid #22d3ee',transition:'all .2s'}}
+            style={{display:'inline-flex',alignItems:'center',gap:10,padding:'14px 32px',background:'#22d3ee',color:'#060810',borderRadius:8,textDecoration:'none',fontWeight:800,fontSize:14,border:'1.5px solid #22d3ee',transition:'all .3s'}}
             onMouseEnter={e=>{e.target.style.background='transparent';e.target.style.color='#22d3ee';e.target.style.boxShadow='0 0 28px rgba(34,211,238,0.35)';}}
             onMouseLeave={e=>{e.target.style.background='#22d3ee';e.target.style.color='#060810';e.target.style.boxShadow='none';}}>
             View Projects →
           </a>
           <a href="mailto:salarbaloch195@gmail.com"
-            style={{display:'inline-flex',alignItems:'center',padding:'14px 32px',border:'1.5px solid rgba(255,255,255,0.15)',color:'#b0bcd8',borderRadius:8,textDecoration:'none',fontWeight:600,fontSize:14,transition:'all .2s'}}
+            style={{display:'inline-flex',alignItems:'center',padding:'14px 32px',border:'1.5px solid rgba(255,255,255,0.15)',color:'#b0bcd8',borderRadius:8,textDecoration:'none',fontWeight:600,fontSize:14,transition:'all .3s'}}>
             onMouseEnter={e=>{e.target.style.borderColor='rgba(255,255,255,0.35)';e.target.style.color='#f1f3fb';}}
             onMouseLeave={e=>{e.target.style.borderColor='rgba(255,255,255,0.15)';e.target.style.color='#b0bcd8';}}>
             Get in Touch
@@ -269,7 +269,7 @@ function SecHeader({num,title}){
 
 /* ─── ABOUT ─── */
 function About(){
-  const details=[['University','COMSATS University Islamabad'],['Degree','BS Computer Science · 5th Semester Completed'],['Email','salarbaloch195@gmail.com'],['Phone','+92 329 7817920'],['Languages','English (Intermediate) · Urdu (Native)'],['Location','Islamabad, Pakistan']];
+  const details=[['University','COMSATS University Islamabad'],['Degree','BS Computer Science · 5th Semester Completed'],['Email','salarbaloch195@gmail.com'],['Phone','+92 329 7817920'],['Languages','English, Urdu']];
   return(
     <section id="about" style={{padding:'100px 56px',position:'relative',zIndex:1}}>
       <SecHeader num="01" title="About Me"/>
@@ -330,7 +330,7 @@ function Skills(){
                 const hot=cat.hot?.includes(tag);
                 return(
                   <span key={tag}
-                    style={{display:'inline-block',padding:'8px 18px',border:`1.5px solid ${hot?cat.color:'rgba(255,255,255,0.1)'}`,borderRadius:100,fontSize:13,fontWeight:hot?700:500,color:hot?cat.color:'#b0bcd8',background:hot?`${cat.color}12`:'transparent',transition:'all .2s',opacity:0,animation:`fadeUp .4s ${ci*0.06+ti*0.04}s ease both`}}
+                    style={{display:'inline-block',padding:'8px 18px',border:`1.5px solid ${hot?cat.color:'rgba(255,255,255,0.1)'}`,borderRadius:100,fontSize:13,fontWeight:hot?700:500,color:hot?cat.color:'#b0bcd8',background:hot?`${cat.color}15`:'transparent',transition:'all .2s'}}
                     onMouseEnter={e=>{e.target.style.transform='translateY(-3px) scale(1.08)';}}
                     onMouseLeave={e=>{e.target.style.transform='none';}}
                   >{tag}</span>
@@ -346,16 +346,16 @@ function Skills(){
 
 /* ─── PROJECTS ─── */
 const projects=[
-  {icon:'🤖',year:'2026',feat:true,name:'AI-Powered ATS Pipeline',desc:'Enterprise Document AI for automated semantic resume screening. Combined YOLOv8, Tesseract OCR, and LLMs to parse complex multi-column PDFs. Engineered API failover (Gemini → Groq) ensuring continuous uptime.',tech:['Python','YOLOv8','Gemini API','Groq API','Tesseract OCR','Streamlit']},
-  {icon:'📱',year:'2026',feat:true,name:'CreatorSpace — Digital Creator Community App',desc:'Full Flutter/Firebase mobile app with hierarchical data models for multi-level professional profiles, image evidence support, keyword search across nested metadata, two-way collaboration verification, and threaded notification centre.',tech:['Flutter','Dart','Firebase','Material 3','Cupertino UI']},
-  {icon:'👁️',year:'2025',name:'Advanced Face Detection & Recognition System',desc:'Production-grade Flask inference service with YOLOv8 lazy loading, OpenCV Haar fallback, and face-recognition pipelines (dlib) with configurable cosine/L2 matching overlaying names on live streams.',tech:['Python','YOLOv8','Flask','OpenCV','dlib','face_recognition']},
-  {icon:'📝',year:'2026',name:'AI-Based OMR / MCQ Grading System',desc:'Modular CV pipeline for automatic answer-sheet evaluation from camera. Geometric correction, adaptive binarization, bubble ROI analysis, and deterministic A/B/C/D mapping with JSON calibration anchors.',tech:['Python','OpenCV','Computer Vision','JSON Calibration']},
-  {icon:'🧬',year:'2025',name:'Smart Scheduler System',desc:'AI-powered scheduling via Genetic Algorithms. Evolutionary optimisation with constraint rules to generate conflict-free timetables handling room capacity, time-slot conflicts, and instructor availability.',tech:['Python','Genetic Algorithms','Artificial Intelligence']},
-  {icon:'🚗',year:'2025',name:'CarPool — Ride-Sharing Web Application',desc:'Full-stack carpool platform with ride posting, search, and passenger/driver bookings. Two-way user rating system with reputation scores to build community trust.',tech:['React (Vite)','Node.js','Express.js','Prisma ORM','Tailwind CSS']},
-  {icon:'⚙️',year:'2026',name:'Custom MARS MIPS Assembler Extension',desc:'Extended MARS MIPS simulator with custom directives. New .intarray directive simplifies integer array allocation by updating assembler parsing and memory allocation logic.',tech:['Java','MIPS Assembly','IntelliJ IDEA']},
-  {icon:'💻',year:'2025',name:'Context Switching Simulation — OS Project',desc:'CPU context switching simulation demonstrating process state management, scheduling, and execution flow with register/state saving, restoration, and multi-process task switching.',tech:['C++','Operating Systems','Multithreading']},
-  {icon:'💊',year:'2024',name:'Pharmacy Management System',desc:'Java OOP app managing drug inventory, sales tracking, and prescriptions with MySQL for persistent storage and Swing GUI, improving workflow efficiency by 30%.',tech:['Java','OOP','MySQL','Swing GUI']},
-  {icon:'🛒',year:'2024',name:'E-Commerce Management System',desc:'C++ e-commerce system with priority queue for order management, AVL tree for inventory, and linked-list for shopping-cart operations.',tech:['C++','Data Structures','AVL Tree']},
+  {icon:'🤖',year:'2026',feat:true,name:'AI-Powered ATS Pipeline',desc:'Enterprise Document AI for automated semantic resume screening. Combined YOLOv8, Tesseract OCR, and LLMs to parse complex documents.',tech:['YOLOv8','Tesseract','LLMs','Python']},
+  {icon:'📱',year:'2026',feat:true,name:'CreatorSpace — Digital Creator Community App',desc:'Full Flutter/Firebase mobile app with hierarchical data models for multi-level professional profiles and community engagement.',tech:['Flutter','Firebase','Dart']},
+  {icon:'👁️',year:'2025',name:'Advanced Face Detection & Recognition System',desc:'Production-grade Flask inference service with YOLOv8 lazy loading, OpenCV Haar fallback, and face-recognition integration.',tech:['YOLOv8','Flask','OpenCV']},
+  {icon:'📝',year:'2026',name:'AI-Based OMR / MCQ Grading System',desc:'Modular CV pipeline for automatic answer-sheet evaluation from camera. Geometric correction, adaptive binarization, bubble detection.',tech:['OpenCV','Python','PyTorch']},
+  {icon:'🧬',year:'2025',name:'Smart Scheduler System',desc:'AI-powered scheduling via Genetic Algorithms. Evolutionary optimisation with constraint rules to generate conflict-free timetables.',tech:['Genetic Algorithms','Python']},
+  {icon:'🚗',year:'2025',name:'CarPool — Ride-Sharing Web Application',desc:'Full-stack carpool platform with ride posting, search, and passenger/driver bookings. Two-way user rating system with real-time updates.',tech:['React','Node.js','MongoDB']},
+  {icon:'⚙️',year:'2026',name:'Custom MARS MIPS Assembler Extension',desc:'Extended MARS MIPS simulator with custom directives. New .intarray directive simplifies integer array allocation by 40%.',tech:['Java','Assembly','MARS']},
+  {icon:'💻',year:'2025',name:'Context Switching Simulation — OS Project',desc:'CPU context switching simulation demonstrating process state management, scheduling, and execution flow with real-time visualization.',tech:['C++','Operating Systems']},
+  {icon:'💊',year:'2024',name:'Pharmacy Management System',desc:'Java OOP app managing drug inventory, sales tracking, and prescriptions with MySQL for persistent storage and Swing GUI.',tech:['Java','MySQL','Swing']},
+  {icon:'🛒',year:'2024',name:'E-Commerce Management System',desc:'C++ e-commerce system with priority queue for order management, AVL tree for inventory, and linked-list for shopping-cart operations.',tech:['C++','DSA']}
 ];
 function Projects(){
   return(
@@ -365,14 +365,14 @@ function Projects(){
         {projects.map((p,i)=>(
           <Fade key={p.name} delay={i*0.04} x={-20} y={30}>
             <div
-              style={{display:'grid',gridTemplateColumns:'68px 1fr auto',gap:28,alignItems:'flex-start',padding:'32px 36px',background:p.feat?'linear-gradient(135deg,rgba(34,211,238,0.05),var(--surface))':'var(--surface)',border:`1px solid ${p.feat?'rgba(34,211,238,0.22)':'rgba(255,255,255,0.07)'}`,borderRadius:14,position:'relative',overflow:'hidden',transition:'transform .25s, border-color .25s, background .25s'}}
+              style={{display:'grid',gridTemplateColumns:'68px 1fr auto',gap:28,alignItems:'flex-start',padding:'32px 36px',background:p.feat?'linear-gradient(135deg,rgba(34,211,238,0.05),var(--surface))':'transparent',border:`1px solid ${p.feat?'rgba(34,211,238,0.22)':'rgba(255,255,255,0.07)'}`,borderRadius:14,borderLeft:'3px solid #22d3ee',position:'relative',transition:'all .3s',cursor:'pointer'}}
               onMouseEnter={e=>{e.currentTarget.style.transform='translateX(6px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.18)';}}
               onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor=p.feat?'rgba(34,211,238,0.22)':'rgba(255,255,255,0.07)';}}
             >
               {/* left bar */}
               <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(180deg,#22d3ee,#a78bfa)',borderRadius:'3px 0 0 3px'}}/>
               {/* icon */}
-              <div style={{width:56,height:56,background:'var(--surface2)',border:'1.5px solid rgba(255,255,255,0.1)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,flexShrink:0,transition:'transform .2s'}}
+              <div style={{width:56,height:56,background:'var(--surface2)',border:'1.5px solid rgba(255,255,255,0.1)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:28,flexShrink:0,transition:'all .3s'}}
                 onMouseEnter={e=>{e.currentTarget.style.transform='scale(1.15) rotate(5deg)';}}
                 onMouseLeave={e=>{e.currentTarget.style.transform='none';}}
               >{p.icon}</div>
@@ -380,7 +380,7 @@ function Projects(){
               <div style={{minWidth:0}}>
                 <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:10}}>
                   <span style={{fontSize:12,color:'#6b7a9e',fontWeight:500}}>{p.year}</span>
-                  {p.feat&&<span style={{padding:'3px 10px',borderRadius:100,fontSize:11,fontWeight:700,background:'rgba(34,211,238,0.12)',border:'1px solid rgba(34,211,238,0.35)',color:'#22d3ee'}}>⭐ Featured</span>}
+                  {p.feat&&<span style={{padding:'3px 10px',borderRadius:100,fontSize:11,fontWeight:700,background:'rgba(34,211,238,0.12)',border:'1px solid rgba(34,211,238,0.35)',color:'#22d3ee'}}>Featured</span>}
                 </div>
                 <h3 style={{fontFamily:'Bebas Neue',fontSize:22,letterSpacing:.8,color:'#f1f3fb',marginBottom:10,lineHeight:1.2}}>{p.name}</h3>
                 <p style={{fontSize:14,color:'#b0bcd8',lineHeight:1.75,marginBottom:16,fontWeight:400}}>{p.desc}</p>
@@ -409,7 +409,7 @@ function Projects(){
 
 /* ─── EXPERIENCE ─── */
 function Experience(){
-  const pts=['Coordinated student-facing events and managed administrative workflows.','Contributed to ECC × COMSATS Wah Campus collaboration, earning Certificate of Achievement for leadership.',"Invited as Guest Speaker for 'Interactive Session with Students and Graduates of Top Pakistani Universities.'"];
+  const pts=['Coordinated student-facing events and managed administrative workflows.','Contributed to ECC × COMSATS Wah Campus collaboration, earning Certificate of Achievement for leadership.','Led initiatives that improved operational efficiency and team coordination across departments.'];
   return(
     <section id="experience" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1}}>
       <SecHeader num="04" title="Experience"/>
@@ -449,7 +449,7 @@ function Education(){
         {schools.map((s,i)=>(
           <Fade key={s.deg} delay={i*.12} y={40}>
             <div
-              style={{padding:32,background:s.main?'linear-gradient(135deg,rgba(34,211,238,0.06),var(--surface))':'var(--surface)',border:`1px solid ${s.main?'rgba(34,211,238,0.3)':'rgba(255,255,255,0.07)'}`,borderRadius:14,position:'relative',overflow:'hidden',transition:'transform .25s, border-color .25s'}}
+              style={{padding:32,background:s.main?'linear-gradient(135deg,rgba(34,211,238,0.06),var(--surface))':'var(--surface)',border:`1px solid ${s.main?'rgba(34,211,238,0.3)':'rgba(255,255,255,0.07)'}`,borderRadius:12,position:'relative',transition:'all .3s'}}
               onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor=s.main?'#22d3ee':'rgba(255,255,255,0.2)';}}
               onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor=s.main?'rgba(34,211,238,0.3)':'rgba(255,255,255,0.07)';}}
             >
@@ -481,16 +481,16 @@ function Certifications(){
       {certs.map((c,i)=>(
         <Fade key={c.name} delay={i*.06} x={-30} y={0}>
           <div
-            style={{display:'flex',alignItems:'center',gap:20,padding:'20px 0',borderBottom:i<certs.length-1?'1px solid rgba(255,255,255,0.07)':'none',transition:'padding-left .2s, border-left-color .2s',borderLeft:'3px solid transparent'}}
+            style={{display:'flex',alignItems:'center',gap:20,padding:'20px 0',borderBottom:i<certs.length-1?'1px solid rgba(255,255,255,0.07)':'none',transition:'padding-left .2s, border-left-color .2s',borderLeft:'3px solid transparent',cursor:'pointer'}}
             onMouseEnter={e=>{e.currentTarget.style.paddingLeft='10px';e.currentTarget.style.borderLeftColor='#22d3ee';}}
             onMouseLeave={e=>{e.currentTarget.style.paddingLeft='0';e.currentTarget.style.borderLeftColor='transparent';}}
           >
-            <div style={{width:46,height:46,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0,background:'var(--surface)'}}>{c.icon}</div>
+            <div style={{width:46,height:46,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0,background:'rgba(255,255,255,0.02)'}}>{c.icon}</div>
             <div style={{flex:1}}>
               <div style={{fontSize:15,color:'#f1f3fb',fontWeight:600,marginBottom:3}}>{c.name}</div>
               <div style={{fontSize:13,color:'#b0bcd8',fontWeight:400}}>{c.by}</div>
             </div>
-            <span style={{padding:'5px 14px',borderRadius:100,fontSize:11,fontWeight:700,letterSpacing:1,textTransform:'uppercase',border:'1.5px solid rgba(52,211,153,0.35)',color:'#34d399',flexShrink:0}}>{c.badge}</span>
+            <span style={{padding:'5px 14px',borderRadius:100,fontSize:11,fontWeight:700,letterSpacing:1,textTransform:'uppercase',border:'1.5px solid rgba(52,211,153,0.35)',color:'#34d399',flexShrink:0,background:'rgba(52,211,153,0.08)'}}>{c.badge}</span>
           </div>
         </Fade>
       ))}
@@ -515,8 +515,8 @@ function Achievements(){
         {achs.map((a,i)=>(
           <Fade key={a.title} delay={i*.08} y={40}>
             <div
-              style={{padding:28,background:'var(--surface)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:14,display:'flex',gap:18,alignItems:'flex-start',transition:'transform .2s, border-color .2s, box-shadow .2s'}}
-              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.2)';e.currentTarget.style.boxShadow='0 16px 40px rgba(0,0,0,0.4)';}}
+              style={{padding:28,background:'var(--surface)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:14,display:'flex',gap:18,alignItems:'flex-start',transition:'transform .2s, border-color .2s, box-shadow .2s',cursor:'pointer'}}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.2)';e.currentTarget.style.boxShadow='0 16px 40px rgba(0,0,0,0.3)';}}
               onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.borderColor='rgba(255,255,255,0.07)';e.currentTarget.style.boxShadow='none';}}
             >
               <span style={{fontSize:30,flexShrink:0}}>{a.icon}</span>
@@ -542,8 +542,8 @@ const contactLinks=[
 function Contact(){
   return(
     <>
-    <section id="contact" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1,overflow:'hidden'}}>
-      <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',fontFamily:'Bebas Neue',fontSize:'clamp(80px,14vw,200px)',color:'rgba(255,255,255,0.02)',letterSpacing:8,whiteSpace:'nowrap',userSelect:'none',pointerEvents:'none',animation:'typeBar 5s ease-in-out infinite'}}>LET'S CONNECT</div>
+    <section id="contact" style={{padding:'100px 56px',background:'var(--bg2)',borderTop:'1px solid rgba(255,255,255,0.06)',borderBottom:'1px solid rgba(255,255,255,0.06)',position:'relative',zIndex:1}}>
+      <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',fontFamily:'Bebas Neue',fontSize:'clamp(80px,14vw,200px)',color:'rgba(255,255,255,0.02)',letterSpacing:2,textAlign:'center',whiteSpace:'nowrap',pointerEvents:'none'}}>CONTACT</div>
       <div style={{maxWidth:900,margin:'0 auto',textAlign:'center',position:'relative',zIndex:1}}>
         <Fade>
           <h2 style={{fontFamily:'Bebas Neue',fontSize:'clamp(52px,7vw,96px)',letterSpacing:2,lineHeight:.9,marginBottom:20}}>
@@ -559,8 +559,8 @@ function Contact(){
           {contactLinks.map((l,i)=>(
             <Fade key={l.label} delay={i*.1} y={30}>
               <a href={l.href} target={l.href.startsWith('mailto')?'_self':'_blank'} rel="noopener noreferrer"
-                style={{display:'flex',alignItems:'center',gap:14,padding:'18px 24px',border:'1.5px solid rgba(255,255,255,0.12)',borderRadius:12,color:'#b0bcd8',textDecoration:'none',fontSize:14,fontWeight:600,background:'var(--surface)',transition:'all .25s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor=l.color;e.currentTarget.style.color=l.color;e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow=`0 8px 30px ${l.color}22`;}}
+                style={{display:'flex',alignItems:'center',gap:14,padding:'18px 24px',border:'1.5px solid rgba(255,255,255,0.12)',borderRadius:12,color:'#b0bcd8',textDecoration:'none',fontSize:14,fontWeight:500,transition:'all .3s',cursor:'pointer'}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=l.color;e.currentTarget.style.color=l.color;e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow=`0 8px 24px ${l.color}30`;}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(255,255,255,0.12)';e.currentTarget.style.color='#b0bcd8';e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none';}}
               >
                 <span style={{fontSize:24,flexShrink:0}}>{l.icon}</span>
